@@ -1,0 +1,5 @@
+<form action="{{ action }}" method="post" enctype="multipart/form-data">
+    {{ upload_form.csrf_token }}
+    {{ upload_form.file}}
+  <input type=submit value=Upload>
+</form>

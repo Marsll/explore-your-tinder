@@ -1,0 +1,28 @@
+<!-- index.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+<h1>My Lame site</h1>
+    <p>Hello, and welcome to my lame site! I'm so glad you're here. I'm so lonely.</p>
+</div>
+<form action="{{ url_for('landing_bp.handle_data') }}" method="post">
+  Right swipes:<br>
+  <input type="text" name="right_swipes" value=""><br>
+  Left swipes:<br>
+  <input type="text" name="left_swipes" value=""><br><br>
+  <input type="submit" value="Submit">
+</form>
+<br>
+<span>Here you will see the transmitted data:</span>
+<ul>
+  <li>Right: {{ right|default('', true)  }}</li>
+  <li>Left: {{ left|default('', true)  }}</li>
+</ul>
+<br>
+{% include 'upload_form.html' %}
+
+{% include 'submit_form.html' %}
+
+{% endblock %}
+
