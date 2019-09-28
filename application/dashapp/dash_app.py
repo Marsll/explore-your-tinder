@@ -21,18 +21,17 @@ def Add_Dash(server):
                     external_scripts=external_scripts,
                     routes_pathname_prefix='/dashapp/')
 
-
     # Create Dash Layout comprised of Data Tables
     dash_app.layout = html.Div([dcc.Location(id='url', refresh=True),
-                                html.Div(id='abc')]
+                                html.Div(id='layout_injector')]
                                )
     init_callback(dash_app)
     return dash_app.server
 
 
 def init_callback(dash_app):
-    @dash_app.callback(Output(component_id='abc', component_property='children'),
-                       [Input(component_id='url', component_property='pathname')])
+    @dash_app.callback(Output('layout_injector', 'children'),
+                       [Input('url', 'pathname')])
     def load_data(pathname):
         from .process_input import get_data
 
