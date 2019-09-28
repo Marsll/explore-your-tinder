@@ -1,22 +1,27 @@
 {% extends "layout.html" %}
 
 {% block pagestyles %}
-  <link href="{{ url_for('static', filename='dist/css/landing.css') }}" rel="stylesheet" type="text/css">
+  <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='src/css/landing.css') }}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  
+  
+  <link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='src/css/dropzone_basic.css') }}">
+  <link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='src/css/dropzone.css') }}" >
+  <script src="{{ url_for('static',filename='src/js/dropzone.js') }}"></script>
+  
+  
 {% endblock %}
 
 {% block content %}
-{% include "navigation-default.html" %}
 <div class="container">
-    <h1>{{body}}</h1>
-    <ul class="page-properties">
-      <li><span class="attribute-title">Blueprint:</span> <span class="attribute-title">{{ request.blueprint }}</span></li>
-      <li><span class="attribute-title">Template:</span> <span class="attribute-title">{{ self._TemplateReference__context.name }}</span></li>
-      <li><span class="attribute-title">Page:</span> <span class="attribute-title">{{ body }}</span></li>
-    </ul>
-</div>
-<form method="post" enctype="multipart/form-data">
-  {{ form.hidden_tag() }}
-  {{ form.file }}
-  <input type="submit">
-</form>
+  <div class="row">
+    <div class="col">
+       <form action="/" class="dropzone"  id="my-awesome-dropzone"></form>
+    </div>
+    <div class="col">
+      <a href="{{ url_for('/dashapp/') }}">Submit</a>
+    </div>
+  </div>
+</div> 
+
 {% endblock %}
