@@ -2,7 +2,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from .main_graph import sankey_graph, double_sankey
-from .cumulative_swipes import cumulative_graph, cumulative_matches, cumulative_matchrate
+from .tabs import tabs
 
 def get_layout(data):
     layout = html.Div(
@@ -36,12 +36,7 @@ def get_layout(data):
     ),
         html.Div([sankey_graph(data)]
                  ),
-        html.Div([cumulative_graph(data)]
-                 ),
-        html.Div([cumulative_matches(data)]
-                 ),
-        html.Div([cumulative_matchrate(data)]
-                 ),
+        html.Div([tabs(data)]),
         #html.Div([double_sankey(data)]),
     ]
     )
