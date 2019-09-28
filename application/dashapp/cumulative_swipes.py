@@ -69,7 +69,7 @@ def create_matchrate(data):
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=x, y=y, 
-                        name="Matchrate in %", 
+                        name="Matchrate in %"
                         ))
 
     fig.update_xaxes(showgrid=True, gridwidth=1., gridcolor='LightGrey')
