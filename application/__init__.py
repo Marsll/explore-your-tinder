@@ -1,26 +1,24 @@
-"""Initialize app with the Application Factory Pattern."""
+"""Initialize app."""
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
 
 def create_app():
     """Construct the core application."""
-    app = Flask(__name__, template_folder="templates",
-                instance_relative_config=False)
+    app = Flask(__name__, instance_relative_config=False)
+
     # Application Configuration
     app.config.from_object('config.Config')
 
-    # Initialize Plugins
-    db.init_app(app)
-    
     with app.app_context():
-            # Import parts of our application
-            # Register blueprints
-            from .landing import landing_routes
-            app.register_blueprint(landing_routes.landing_bp)
 
-            # Create tables for our models
-            db.create_all()
+        
+        # Import parts of our application
+        from .landing import landing_routes
+        app.register_blueprint(landing_routes.landing_bp)
 
-            return app
+
+        # Import Dash application
+        from .dashapp import dash_app
+        app = dash_app.Add_Dash(app)
+
+        return app
