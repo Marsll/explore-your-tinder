@@ -4,6 +4,7 @@ from datetime import date
 from dateutil import relativedelta
 import math
 from collections import Counter
+import codecs
 
 def count(dictionary):
     """Return total number of dictionary entry.
@@ -48,9 +49,9 @@ def time_difference(date_str):
     if months == 0:
         return f'{days} days'
     elif years == 0:
-        return f'{months} months {days} days'
+        return f'{months} m {days} d'
     else:
-        return f'{years} years {months} months {days} days'
+        return f'{years} y {months} m {days} d'
 
 
 def get_data(str):
@@ -112,5 +113,17 @@ def get_data(str):
     data_dict["matches_cum"] = matches_cum
     data_dict["matchrate_cum"] = match_rate_cum
 
+    write_messages_txt(data)
+
     return data_dict
+
+def write_messages_txt(data):
+    # TODO look why every line is there twice!
+    # overwrite current txt file
+    with codecs.open("application/static/data/Messages.txt", "w", "utf-8-sig") as temp:
+        temp.write('\n')
+    for mes_dict in data["Messages"]:
+        for dictionary in mes_dict['messages']:
+            with codecs.open("application/static/data/Messages.txt", "a", "utf-8-sig") as temp:
+                temp.write(dictionary['message']+'\n')
 
