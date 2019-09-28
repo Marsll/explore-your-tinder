@@ -4,9 +4,10 @@ import dash_html_components as html
 from .cards import card_container, four_cards
 from .main_graph import double_sankey, sankey_graph
 from .tabs import tabs
-
+from .wordcloud import generate_worldcloud
 
 def get_layout(data):
+    generate_worldcloud()
     layout = html.Div(
         [html.Div(
             [html.Div(html.H1("Your RESULTS"), id="h1-results"),
