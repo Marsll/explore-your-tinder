@@ -49,9 +49,9 @@ def time_difference(date_str):
     if months == 0:
         return f'{days} days'
     elif years == 0:
-        return f'{months} m {days} d'
+        return f'{months}m {days}d'
     else:
-        return f'{years} y {months} m {days} d'
+        return f'{years}y {months}m {days}d'
 
 
 def get_data(str):
