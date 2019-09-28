@@ -2,6 +2,7 @@ import json
 import numpy as np
 from datetime import date
 from dateutil import relativedelta
+import math
 
 def count(dictionary):
     """Return total number of dictionary entry.
@@ -56,7 +57,7 @@ def get_data(str):
 
     swipes_total = swipes_likes_total + swipes_passes_total
     no_match = swipes_likes_total - matches_total
-    match_rate = int(matches_total / swipes_likes_total * 100)
+    match_rate = math.ceil(matches_total / swipes_likes_total * 100)
     no_messaging = matches_total - messaging
 
     # calc usage time

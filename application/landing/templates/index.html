@@ -14,4 +14,9 @@
       <li><span class="attribute-title">Page:</span> <span class="attribute-title">{{ body }}</span></li>
     </ul>
 </div>
+<form method="post" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  {{ form.file }}
+  <input type="submit">
+</form>
 {% endblock %}
