@@ -1,9 +1,10 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-from .main_graph import sankey_graph, double_sankey
-from .insert import double_graph
+#from .insert import double_graph
 from .cumulative_swipes import cumulative_graph
+from .main_graph import double_sankey, sankey_graph
+
 
 def get_layout(data):
     layout = html.Div(
