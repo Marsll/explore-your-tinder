@@ -1,4 +1,5 @@
 import json
+import os
 # import numpy as np
 
 
@@ -11,8 +12,8 @@ def count(dictionary):
     return count
 
 
-def get_data():
-    with open("../../data/data.json",encoding="utf8") as json_file:
+def get_data(str):
+    with open(str, encoding="utf8") as json_file:
         data = json.load(json_file)
 
     # get data from json
@@ -53,5 +54,3 @@ def get_data():
 
     return data_dict
 
-
-print(get_data())
