@@ -112,6 +112,8 @@ venv.bak/
 # exclude everything in uploads
 uploads/*
 
+Messages.txt
+
 # exception to the rule so that uploads folder stays empty
 !uploads/.gitkeep 
 

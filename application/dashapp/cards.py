@@ -42,7 +42,7 @@ def four_cards(data):
         html.Div(
             # Card 2
             [generate_card(
-                    "# of Swipes",
+                    "Swipes",
                     data['swipes_total'],
                     icon="far fa-hand-point-up" )
             ],
