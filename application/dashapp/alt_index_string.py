@@ -2,8 +2,8 @@ html_layout = '''<!DOCTYPE html>
                     <html>
                         <head>
                             {%metas%}
-                            <title>{%title%}</title>
-                            {%favicon%}
+                            <title>Explore your Tinder</title>
+                            <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
                             {%css%}
                         </head>
                         <body>

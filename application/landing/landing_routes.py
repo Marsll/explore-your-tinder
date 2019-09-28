@@ -35,7 +35,7 @@ def landing():
             #return redirect(url_for('/dashapp/'))
 
     return render_template('index.html',
-                           title='Landing',
+                           title='Explore your Tinder | Upload',
                            template='home-template main',
                            body="Home")
 
