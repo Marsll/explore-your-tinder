@@ -1,10 +1,11 @@
 """Routes for main pages."""
 from flask import Blueprint
 from flask import current_app as app
-from flask import render_template
-from flask import url_for, redirect, render_template
+from flask import flash, redirect, render_template, request, url_for
 from werkzeug import secure_filename
-from .forms import UploadForm
+
+ALLOWED_EXTENSIONS = set(['json', 'zip', ])
+
 
 # Blueprint Configuration
 landing_bp = Blueprint('landing_bp', __name__,
@@ -14,17 +15,26 @@ landing_bp = Blueprint('landing_bp', __name__,
 
 @landing_bp.route('/', methods=['GET', 'POST'])
 def landing():
-  
-    form = UploadForm()
-
-    if form.validate_on_submit():
-        filename = secure_filename(form.file.data.filename)     
-        form.file.data.save('application/static/uploads/' + filename)
-        return redirect(url_for('/dashapp/'))
-
     """Homepage route."""
+    #form = UploadForm()
+
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save('application/static/uploads/' + filename)
+            #return redirect(url_for('/dashapp/'))
+
     return render_template('index.html',
-                            form=form,
                            title='Landing',
                            template='home-template main',
                            body="Home")
@@ -37,3 +47,8 @@ def about():
                            title='Flask-Blueprint Tutorial | About',
                            template='about-template main',
                            body="About")
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

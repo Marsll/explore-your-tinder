@@ -5,13 +5,14 @@ import dash_html_components as html
 from dash import Dash
 from dash.dependencies import Input, Output
 
+from .alt_index_string import html_layout
 from .layout_content import get_layout
 
 
 def Add_Dash(server):
     """Create a Dash app."""
     external_stylesheets = ['/static/src/css/styles.css',
-                            '/static/src/css/s1.css',
+                            "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
                             'https://fonts.googleapis.com/css?family=Lato',
                             'https://use.fontawesome.com/releases/v5.8.1/css/all.css']
     external_scripts = ['/static/dist/js/includes/jquery.min.js',
@@ -20,6 +21,9 @@ def Add_Dash(server):
                     external_stylesheets=external_stylesheets,
                     external_scripts=external_scripts,
                     routes_pathname_prefix='/dashapp/')
+
+    # Override the underlying HTML template
+    dash_app.index_string = html_layout
 
     # Create Dash Layout comprised of Data Tables
     dash_app.layout = html.Div([dcc.Location(id='url', refresh=True),
