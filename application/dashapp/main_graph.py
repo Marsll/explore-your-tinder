@@ -1,7 +1,8 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-m_graph = dcc.Graph(
+def m_graph(data):
+    graph = dcc.Graph(
         id='example-graph',
         figure={
             'data': [
@@ -13,3 +14,4 @@ m_graph = dcc.Graph(
             }
         }
     )
+    return graph

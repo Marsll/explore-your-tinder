@@ -32,7 +32,7 @@ def get_layout(data):
         id="info-container",
         className="row container-display",
     ),
-        html.Div([m_graph]
+        html.Div([m_graph(data)]
                  )
     ]
     )
