@@ -1,7 +1,7 @@
 import json
-import os
-# import numpy as np
-
+import numpy as np
+from datetime import date
+from dateutil import relativedelta
 
 def count(dictionary):
     """Return total number of dictionary entry.
@@ -10,6 +10,27 @@ def count(dictionary):
     for key in dictionary:
         count += dictionary[key]
     return count
+
+
+def time_difference(date_str):
+
+    year = int(date_str[0:4])
+    month = int(date_str[5:7])
+    day = int(date_str[8:10])
+    today = date.today()
+    start_date = date(year, month, day)
+
+    diff = relativedelta.relativedelta(today, start_date)
+
+    years = diff.years 
+    months = diff.months
+    days = diff.days
+    if months == 0:
+        return f'{days} days'
+    elif years == 0:
+        return f'{months} months {days} days'
+    else:
+        return f'{years} years {months} months {days} days'
 
 
 def get_data(str):
@@ -35,8 +56,12 @@ def get_data(str):
 
     swipes_total = swipes_likes_total + swipes_passes_total
     no_match = swipes_likes_total - matches_total
-    match_rate = matches_total / swipes_likes_total
+    match_rate = int(matches_total / swipes_likes_total * 100)
     no_messaging = matches_total - messaging
+
+    # calc usage time
+    first_open = list(app_opens.keys())[0]
+    usage_time = time_difference(first_open)
 
     # feed data_dict with values
     data_dict = dict()
@@ -51,6 +76,7 @@ def get_data(str):
     data_dict["no_messaging"] = no_messaging
     data_dict["messages_sent_total"] = messages_sent_total
     data_dict["messages_received_total"] = messages_received_total
+    data_dict["usage_time"] = usage_time
 
     return data_dict
 

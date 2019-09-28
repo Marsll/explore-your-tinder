@@ -6,22 +6,22 @@ data = get_data("application/static/data/data.json")
 layout = html.Div(
         [
             html.Div(
-                [html.H6(data["match_rate"]), html.P("Matchrate")],
+                [html.H6(f"{data['match_rate']:d}%" ), html.P("Matchrate")],
                 id="wells",
                 className="mini_container",
             ),
             html.Div(
-                [html.H6(id="gasText"), html.P("Gas")],
+                [html.H6(data['swipes_total']), html.P("Total number of swipes")],
                 id="gas",
                 className="mini_container",
             ),
             html.Div(
-                [html.H6("100"), html.P("Oil")],
+                [html.H6("100"), html.P("Ranking")],
                 id="oil",
                 className="mini_container",
             ),
             html.Div(
-                [html.H6(id="waterText"), html.P("Water")],
+                [html.H6(data['usage_time']), html.P("Usage time")],
                 id="water",
                 className="mini_container",
             ),
