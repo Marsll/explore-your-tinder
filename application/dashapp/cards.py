@@ -1,9 +1,10 @@
-import dash_html_components as html
 import dash_core_components as dcc
+import dash_html_components as html
+
 
 # card component
-def generate_card(description, value):
-    card = html.Div([
+def four_cards(data):
+    four_cards = html.Div([
         html.Div([],
         className)
     ],           
