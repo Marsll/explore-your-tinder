@@ -1,10 +1,12 @@
+import codecs
 import json
-import numpy as np
-from datetime import date
-from dateutil import relativedelta
 import math
 from collections import Counter
-import codecs
+from datetime import date
+
+import numpy as np
+from dateutil import relativedelta
+
 
 def count(dictionary):
     """Return total number of dictionary entry.
@@ -113,17 +115,4 @@ def get_data(str):
     data_dict["matches_cum"] = matches_cum
     data_dict["matchrate_cum"] = match_rate_cum
 
-    write_messages_txt(data)
-
     return data_dict
-
-def write_messages_txt(data):
-    # TODO look why every line is there twice!
-    # overwrite current txt file
-    with codecs.open("application/static/data/Messages.txt", "w", "utf-8-sig") as temp:
-        temp.write('\n')
-    for mes_dict in data["Messages"]:
-        for dictionary in mes_dict['messages']:
-            with codecs.open("application/static/data/Messages.txt", "a", "utf-8-sig") as temp:
-                temp.write(dictionary['message']+'\n')
-
