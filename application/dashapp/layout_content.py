@@ -1,11 +1,14 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-from .main_graph import m_graph
-
+from .main_graph import sankey_graph, double_sankey
+from .insert import double_graph
+from .cumulative_swipes import cumulative_graph
 
 def get_layout(data):
-    layout = html.Div([html.Div(
+    layout = html.Div(
+        [html.Div(html.H1("Your RESULTS"), ),
+            html.Div(
         [
             html.Div(
                 [html.H6(f"{data['match_rate']:d}%"), html.P("Matchrate")],
@@ -32,8 +35,11 @@ def get_layout(data):
         id="info-container",
         className="row container-display",
     ),
-        html.Div([m_graph(data)]
-                 )
+        html.Div([sankey_graph(data)]
+                 ),
+        html.Div([cumulative_graph(data)]
+                 ),
+        #html.Div([double_sankey(data)]),
     ]
     )
 

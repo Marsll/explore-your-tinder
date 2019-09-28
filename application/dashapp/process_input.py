@@ -3,6 +3,7 @@ import numpy as np
 from datetime import date
 from dateutil import relativedelta
 import math
+from collections import Counter
 
 def count(dictionary):
     """Return total number of dictionary entry.
@@ -12,6 +13,24 @@ def count(dictionary):
         count += dictionary[key]
     return count
 
+def create_date(date_str):
+    """Return date from string"""
+    year = int(date_str[0:4])
+    month = int(date_str[5:7])
+    day = int(date_str[8:10])
+
+    return date(year, month, day)
+
+def cumulate_swipes(swipes):
+    """Calculate cumulate swipe count with corresponding dates."""
+    dates = []
+    swipes_counts = []
+    last_count = 0
+    for date_str in swipes:
+        dates.append(create_date(date_str))
+        last_count += swipes[date_str]
+        swipes_counts.append(last_count)
+    return {"dates": dates, "swipes_count": swipes_counts} 
 
 def time_difference(date_str):
 
@@ -46,6 +65,8 @@ def get_data(str):
     messages_sent = data['Usage']['messages_sent']
     messages_recieved = data['Usage']['messages_received']
     messaging = int(data["Messages"][0]["match_id"][6:])
+    gender = data["User"]["gender"]
+    gender_filter = data["User"]["gender_filter"]
 
     # calculate useful values
     app_opens_total = count(app_opens)
@@ -54,6 +75,9 @@ def get_data(str):
     matches_total = count(matches)
     messages_sent_total = count(messages_sent)
     messages_received_total = count(messages_recieved)
+    counter = Counter
+    swipes_cum = cumulate_swipes(counter(swipes_likes) + counter(swipes_passes))
+    swipes_likes_cum = cumulate_swipes(counter(swipes_likes))
 
     swipes_total = swipes_likes_total + swipes_passes_total
     no_match = swipes_likes_total - matches_total
@@ -68,7 +92,7 @@ def get_data(str):
     data_dict = dict()
     data_dict["swipes_total"] = swipes_total
     data_dict["matches_total"] = matches_total
-    data_dict["no_match"] = no_match
+    data_dict["no_match_total"] = no_match
     data_dict["match_rate"] = match_rate
     data_dict["swipes_likes_total"] = swipes_likes_total
     data_dict["swipes_passes_total"] = swipes_passes_total
@@ -78,6 +102,9 @@ def get_data(str):
     data_dict["messages_sent_total"] = messages_sent_total
     data_dict["messages_received_total"] = messages_received_total
     data_dict["usage_time"] = usage_time
-
+    data_dict["gender"] = gender
+    data_dict["gender_filter"] = gender_filter
+    data_dict["swipes_cum"] = swipes_cum
+    data_dict["swipes_likes_cum"] = swipes_likes_cum
     return data_dict
 
