@@ -33,7 +33,7 @@ def Add_Dash(server):
 def init_callback(dash_app):
     @dash_app.callback(Output(component_id='abc', component_property='children'),
                        [Input(component_id='url', component_property='pathname')])
-    def load_data():
+    def load_data(pathname):
         from .process_input import get_data
 
         data = get_data("application/static/uploads/data.json")
