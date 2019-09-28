@@ -1,7 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objects as go
-import numpy as np
+
 
 def create_sankey(data):
     sankey_data = go.Sankey(
@@ -65,7 +65,7 @@ def sankey_graph(data):
     graph = dcc.Graph(
         id='sankey-graph',
         figure=go.Figure(data=[create_sankey(data)]),
-        config={'displayModeBar': False}
+        config={'displayModeBar': False, "staticPlot": True}
     )
     return graph
 
@@ -73,7 +73,7 @@ def double_sankey(data):
     graph = dcc.Graph(
         id='sankey-graph',
         figure=double_plot(create_sankey(data), create_sankey_small(data)),
-        config={'displayModeBar': False}
+        config={'displayModeBar': False, "staticPlot": True}
     )
     return graph
 

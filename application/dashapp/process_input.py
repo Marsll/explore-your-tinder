@@ -78,6 +78,9 @@ def get_data(str):
     counter = Counter
     swipes_cum = cumulate_swipes(counter(swipes_likes) + counter(swipes_passes))
     swipes_likes_cum = cumulate_swipes(counter(swipes_likes))
+    matches_cum = cumulate_swipes(counter(matches))
+    match_rate_cum = np.array(matches_cum["swipes_count"]) / np.array(swipes_likes_cum["swipes_count"])
+  
 
     swipes_total = swipes_likes_total + swipes_passes_total
     no_match = swipes_likes_total - matches_total
@@ -106,5 +109,8 @@ def get_data(str):
     data_dict["gender_filter"] = gender_filter
     data_dict["swipes_cum"] = swipes_cum
     data_dict["swipes_likes_cum"] = swipes_likes_cum
+    data_dict["matches_cum"] = matches_cum
+    data_dict["matchrate_cum"] = match_rate_cum
+
     return data_dict
 
