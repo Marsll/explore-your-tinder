@@ -1,11 +1,7 @@
 """Create a Dash app within a Flask app."""
 
-import dash_core_components as dcc
-import dash_html_components as html
+from .layout_content import layout
 from dash import Dash
-from dash.dependencies import Input, Output
-
-from .layout_content import get_layout
 
 
 def Add_Dash(server):
@@ -23,18 +19,6 @@ def Add_Dash(server):
 
 
     # Create Dash Layout comprised of Data Tables
-    dash_app.layout = html.Div([dcc.Location(id='url', refresh=True),
-                                html.Div(id='abc')]
-                               )
-    init_callback(dash_app)
+    dash_app.layout = layout
+
     return dash_app.server
-
-
-def init_callback(dash_app):
-    @dash_app.callback(Output(component_id='abc', component_property='children'),
-                       [Input(component_id='url', component_property='pathname')])
-    def load_data():
-        from .process_input import get_data
-
-        data = get_data("application/static/uploads/data.json")
-        return get_layout(data)
