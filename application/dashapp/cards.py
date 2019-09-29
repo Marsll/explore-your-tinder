@@ -52,7 +52,7 @@ def four_cards(data):
             # Card 3
             [generate_card(
                     "Ranking",
-                    "<3%",
+                    "<31%",
                     icon="fas fa-trophy")
             ],
         className="col-12 col-lg-6 col-xl"),
@@ -78,7 +78,7 @@ def card_container(headline=None, children=None):
     if headline is not None:
         card_container = html.Div(
             [html.Div(
-                [html.H6(headline, className="")],
+                [html.H5(headline, className="")],
             className="card-header text-white bg-pink"),
 
             html.Div(children=children, className="card-body")

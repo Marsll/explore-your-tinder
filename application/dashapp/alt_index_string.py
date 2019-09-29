@@ -12,7 +12,7 @@ html_layout = '''<!DOCTYPE html>
                                     <div class = "container">
                                     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                                         <a class="navbar-brand" href="/">
-                                        <img src="../static/img/download.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                                        <img src="../static/img/white_flame.png" width="30" height="30" class="d-inline-block align-top" alt="">
                                         Explore Your Tinder
                                         </a>
                                     </div>
