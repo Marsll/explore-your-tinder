@@ -12,16 +12,31 @@
 
 
 {% block content %}
+
+<div class="container pt-2 bg-white">
+  <h2>Analyze your tinder data</h2>
+  <hr>
+  <p class=>How many swipes have you accumulated since you first started using Tinder?
+   And how many of the "right" swipes turn into matches?
+   </p>
+   <p class=>This website can answer these and many more interesting questions in the blink of an eye. 
+  Simply request your data from Tinder following this </p>
+  <p>
+    <a href="https://account.gotinder.com/data">-- Link --</a>
+  </p>
+  <p class=>wait a few days and upload it here:</p>
+</div>
 <div class="container pt-2">
   <div class="pt-2">
-    <div class="row">
-      <div class="col-10">
-        <form action="/" class="dropzone"  id="my-awesome-dropzone"></form>
-      </div>
-      <div class="col-2">
-        <a class="btn btn-block btn-dark stretched-link" href="{{ url_for('/dashapp/') }}">Submit</a>
-      </div>
-    </div>
+        <div class="row">
+          <div class="container-fluid">
+            <form action="/" class="dropzone"  id="my-awesome-dropzone"></form>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+            <a class="btn btn-block btn-light stretched-link" href="{{ url_for('/dashapp/') }}">Submit</a>
+        </div>
   </div>
 </div> 
 {% endblock %}

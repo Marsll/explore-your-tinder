@@ -26,7 +26,7 @@ def Add_Dash(server):
     dash_app.index_string = html_layout
 
     # Create Dash Layout comprised of Data Tables
-    dash_app.layout = html.Div([dcc.Location(id='url', refresh=False),
+    dash_app.layout = html.Div([dcc.Location(id='url', refresh=True),
                                 html.Div(id='layout_injector')]
                                )
     init_callback(dash_app)
