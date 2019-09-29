@@ -8,18 +8,19 @@ from .tabs import tabs
 
 def get_layout(data):
     layout = html.Div(
-        [html.Div(
-            [html.Div(html.H1("Your RESULTS"), id="h1-results"),
+                [html.Div(html.H1("Your RESULTS"), id="h1-results"),
 
-            html.Div([four_cards(data)], id="four_cards"),
+                html.Div([four_cards(data)], id="four_cards"),
 
-            card_container("Sankey diagram", [sankey_graph(data)]),
+                card_container("Sankey diagram", [sankey_graph(data)]),
+                #card_container([generate_user_input_element()]),
+                card_container("Development over time", [tabs(data)]),
+                dcc.Input(id='input-1-state', type='text', value='Montreal'),
+                dcc.Input(id='input-2-state', type='text', value='Canada'),
+                html.Button(id='submit-button', n_clicks=0, children='Submit'),
+                html.Div(id='output-state'),
+                html.Br(),
+                ],
+            )
 
-            card_container("Development over time", [tabs(data)]),
-            ], 
-        className="container")
-        ],
-        id = "main-dash-app",
-        className="bg-light"
-)
     return layout

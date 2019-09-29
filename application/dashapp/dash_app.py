@@ -1,11 +1,13 @@
 """Create a Dash app within a Flask app."""
 
 import dash_core_components as dcc
+import dash_daq as daq
 import dash_html_components as html
 from dash import Dash
 from dash.dependencies import Input, Output
 
 from .alt_index_string import html_layout
+from .cards import card_container
 from .layout_content import get_layout
 
 
@@ -25,10 +27,17 @@ def Add_Dash(server):
     # Override the underlying HTML template
     dash_app.index_string = html_layout
 
-    # Create Dash Layout comprised of Data Tables
+    # The main hack to inject the layout after file was processed
     dash_app.layout = html.Div([dcc.Location(id='url', refresh=False),
-                                html.Div(id='layout_injector')]
-                               )
+                          html.Div([
+                                # Plot Layout
+                                html.Div(id='layout_injector'),
+                                # New card with switch
+                          ], className="container")      
+                            
+    ], id = "main-dash-app",
+        className="bg-light"
+    )
     init_callback(dash_app)
     return dash_app.server
 
@@ -41,3 +50,19 @@ def init_callback(dash_app):
 
         data = get_data("application/static/uploads/data.json")
         return get_layout(data)
+
+
+    @dash_app.callback(
+        Output('toggle-switch-output', 'children'),
+        [Input('my-toggle-switch', 'value')])
+    def update_output(value):
+        return 'The switch is {}.'.format(value)
+
+    @dash_app.callback(Output('output-state', 'children'),
+              [Input('submit-button', 'n_clicks')],
+              [State('input-1-state', 'value'),
+               State('input-2-state', 'value')])
+    def update_output(n_clicks, input1, input2):
+        return ('The Button has been pressed {} times,'
+            'Input 1 is "{}",'
+            'and Input 2 is "{}"').format(n_clicks, input1, input2)

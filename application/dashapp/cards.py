@@ -73,15 +73,23 @@ def four_cards(data):
     return four_cards
 
 
-def card_container(headline, children=None):
-    card_container = html.Div(
-        [html.Div(
-            [html.H6(headline, className="")],
-        className="card-header bg-pink"),
+def card_container(headline=None, children=None):
 
-        html.Div(children=children, className="card-body")
-        ],
-    className="card"    
-    )
+    if headline is not None:
+        card_container = html.Div(
+            [html.Div(
+                [html.H6(headline, className="")],
+            className="card-header bg-pink"),
+
+            html.Div(children=children, className="card-body")
+            ],
+        className="card"    
+        )
+    else:
+        card_container = html.Div([
+            html.Div(children=children, className="card-body")
+            ],
+        className="card"    
+        )
 
     return card_container
