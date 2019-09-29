@@ -114,5 +114,8 @@ def get_data(str):
     data_dict["swipes_likes_cum"] = swipes_likes_cum
     data_dict["matches_cum"] = matches_cum
     data_dict["matchrate_cum"] = match_rate_cum
+    data_dict["numbers"] = None
+    data_dict["dates"] = None
+    data_dict["outcomes"] = None
 
     return data_dict
