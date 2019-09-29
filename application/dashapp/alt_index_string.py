@@ -8,11 +8,11 @@ html_layout = '''<!DOCTYPE html>
                         </head>
                         <body>
                             <div class="header">
-                                <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                                <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #ff336d">
                                     <div class = "container">
                                     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                                         <a class="navbar-brand" href="/">
-                                        <img src="../static/img/header_logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                                        <img src="../static/img/download.png" width="30" height="30" class="d-inline-block align-top" alt="">
                                         Explore Your Tinder
                                         </a>
                                     </div>

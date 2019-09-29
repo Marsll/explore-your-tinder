@@ -9,7 +9,18 @@ from .tabs import tabs
 def get_layout(data):
     layout = html.Div(
         [html.Div(
-            [html.Div(html.H1("Your RESULTS"), id="h1-results"),
+            [card_container(children=[
+                dcc.Markdown('''
+#### These are **your results**.
+
+To share them with friends, generate [your personal link](http://TODO).
+
+Below, you can find a selection of figures and graphs representing
+different aspects of your Tinder usage. To produce an even more
+comprehensive picture, you can provide the site with additional data! 
+''')
+
+            ]),
 
             html.Div([four_cards(data)], id="four_cards"),
 
@@ -20,6 +31,6 @@ def get_layout(data):
         className="container")
         ],
         id = "main-dash-app",
-        className="bg-light"
+        className="bg-light-grey"
 )
     return layout

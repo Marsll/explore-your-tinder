@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block pagestyles %}
-  <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='src/css/landing.css') }}">
+  <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='src/css/styles.css') }}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   
   
@@ -19,7 +19,7 @@
         <form action="/" class="dropzone"  id="my-awesome-dropzone"></form>
       </div>
       <div class="col-2">
-        <a class="btn btn-dark stretched-link" href="{{ url_for('/dashapp/') }}">Submit</a>
+        <a class="btn btn-block btn-dark stretched-link" href="{{ url_for('/dashapp/') }}">Submit</a>
       </div>
     </div>
   </div>

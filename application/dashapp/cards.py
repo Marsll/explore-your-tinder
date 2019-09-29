@@ -67,21 +67,27 @@ def four_cards(data):
         className="col-12 col-lg-6 col-xl")
 
         ], 
-    className="row"
+    className="row mb-2"
     )          
 
     return four_cards
 
 
-def card_container(headline, children=None):
-    card_container = html.Div(
-        [html.Div(
-            [html.H6(headline, className="")],
-        className="card-header bg-pink"),
+def card_container(headline=None, children=None):
 
-        html.Div(children=children, className="card-body")
-        ],
-    className="card"    
-    )
+    if headline is not None:
+        card_container = html.Div(
+            [html.Div(
+                [html.H6(headline, className="")],
+            className="card-header text-white bg-pink"),
+
+            html.Div(children=children, className="card-body")
+            ],
+        className="card mb-2"    
+        )
+    else:
+        card_container = html.Div(
+            [html.Div(children=children, className="card-body")],
+            className="card mb-2")
 
     return card_container
