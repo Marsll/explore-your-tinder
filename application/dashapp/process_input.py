@@ -79,8 +79,10 @@ def get_data(str):
     messages_sent_total = count(messages_sent)
     messages_received_total = count(messages_recieved)
     counter = Counter
-    swipes_cum = cumulate_swipes(counter(swipes_likes) + counter(swipes_passes))
-    swipes_likes_cum = cumulate_swipes(counter(swipes_likes))
+    likes = counter(swipes_likes)
+    swipes_likes_cum = cumulate_swipes(likes)
+    likes.update(counter(swipes_passes)) #likes is no likes + no_likes! 
+    swipes_cum = cumulate_swipes(likes)
     matches_cum = cumulate_swipes(counter(matches))
     match_rate_cum = np.array(matches_cum["swipes_count"]) / np.array(swipes_likes_cum["swipes_count"])
   
