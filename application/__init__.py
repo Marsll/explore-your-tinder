@@ -1,6 +1,8 @@
 """Initialize app."""
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 
 def create_app():
     """Construct the core application."""
@@ -8,6 +10,9 @@ def create_app():
 
     # Application Configuration
     app.config.from_object('config.Config')
+
+    # Initialize database
+    db.init_app(app)
 
     with app.app_context():
 
@@ -19,6 +24,9 @@ def create_app():
 
         # Import Dash application
         from .dashapp import dash_app
-        app = dash_app.Add_Dash(app)
+        app = dash_app.add_dash(app)
+
+        # Create tables for our models
+        db.create_all()
 
         return app

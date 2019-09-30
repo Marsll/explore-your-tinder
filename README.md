@@ -13,5 +13,6 @@ More extensive
 * ZIP / folder upload
 * Pandas error fixen
 * Icon in navbar (attribuierung)
+* Estimated time for swiping (messaging)
 
 * Deployment

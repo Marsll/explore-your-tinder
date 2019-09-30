@@ -114,6 +114,8 @@ uploads/*
 
 Messages.txt
 
+site.db
+
 # exception to the rule so that uploads folder stays empty
 !uploads/.gitkeep 
 
