@@ -3,11 +3,16 @@
 import dash_core_components as dcc
 import dash_html_components as html
 from dash import Dash
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import plotly.graph_objects as go
+from flask import current_app as app
+import logging
 
 from .alt_index_string import html_layout
 from .layout_content import get_layout
-
+from .main_graph import create_sankey, get_dicts
+from .process_input import get_data
 
 def Add_Dash(server):
     """Create a Dash app."""
@@ -24,7 +29,7 @@ def Add_Dash(server):
 
     # Override the underlying HTML template
     dash_app.index_string = html_layout
-
+    dash_app.config.suppress_callback_exceptions = True
     # Create Dash Layout comprised of Data Tables
     dash_app.layout = html.Div([dcc.Location(id='url', refresh=True),
                                 html.Div(id='layout_injector')]
@@ -37,7 +42,28 @@ def init_callback(dash_app):
     @dash_app.callback(Output('layout_injector', 'children'),
                        [Input('url', 'pathname')])
     def load_data(pathname):
-        from .process_input import get_data
+
 
         data = get_data("application/static/uploads/data.json")
         return get_layout(data)
+
+    @dash_app.callback(
+        Output(component_id='sankey-graph', component_property='figure'),
+        [Input(component_id='button', component_property='n_clicks')],
+        [State('numbers', 'value'),
+        State('dates', 'value'),
+        State('hookups', 'value'),
+        State('f+s', 'value'),
+        State('relationships', 'value'),
+        State('nothing', 'value'),
+        State('toggle-zoom', 'value')]
+    )
+    def update_output(n_clicks, numbers, dates, hookups, fplus, relationships, nothing, zoom):
+        if n_clicks is None:
+            raise PreventUpdate
+        else: 
+            data = get_data("application/static/uploads/data.json")
+            data["numbers"] = numbers
+            data["dates"] = dates
+            node_dict, link_dict = get_dicts(data)
+            return go.Figure(data=[create_sankey(node_dict, link_dict)])

@@ -2,7 +2,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
 import plotly.graph_objects as go
-
+from flask import current_app as app
+import logging
 
 def create_sankey(node_dict, link_dict):
     try:
@@ -21,22 +22,12 @@ def create_sankey(node_dict, link_dict):
     return sankey_data
 
 def get_dicts(data):
-    vertices = 4
     label = ["Total swipes", "Right swipes", "Left swipes", "Matches", "No Match", "Messaging", "No Messaging"]
-    color = ["blue","blue", "red", "blue", "red", "blue", "red", "blue", "red",
-             "blue", "red", "green", "green", "green", "green"]
+    color = ["blue","blue", "red", "blue", "red", "blue", "red"]
     value = [data["swipes_likes_total"], data["swipes_passes_total"],
              data["matches_total"], data["no_match_total"], 
              data["messaging"], data["no_messaging"]]
-    if data['numbers'] is not None:
-        vertices += 1
-        label += ["Number", "No Number"]
-    if data['dates'] is not None:
-        vertices += 1
-        label += ["Date", "No Date"]
-    if data['outcomes'] is not None:
-        vertices += 2
-        label += ["Hookup", "F+", "Relationship", "Nothing"]
+    label, color, value, vertices = add_categories(data, label, color, value, vertices=4)
     x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
     x_vertices.sort()
     y_pos = [0.000001, 1., 0.3, 0.45, .8, .3, .6, 0.1 , 0.5, 0.2]
@@ -64,11 +55,11 @@ def get_dicts(data):
     )
     return node_dict, link_dict
 
-def sankey_graph(data):
+def sankey_graph(data, id):
     node_dict, link_dict = get_dicts(data)
 
     graph = dcc.Graph(
-        id='sankey-graph',
+        id=id,
         figure=go.Figure(data=[create_sankey(node_dict, link_dict)]),
         config={'displayModeBar': False, "staticPlot": True}
     )
@@ -77,8 +68,27 @@ def sankey_graph(data):
 
 
 
+def add_categories(data, label, color, value, vertices=4):
 
-
+    if data['numbers'] is not None and data['numbers'] != 0:
+        vertices += 1
+        label += ["Number", "No Number"]
+        color += ["blue", "red"]
+        numbers = data["numbers"]
+        value += [numbers]
+        value += [value[-3] - numbers]
+    if data['dates'] is not None and data['dates'] != 0:
+        vertices += 1
+        label += ["Date", "No Date"]
+        color += ["blue", "red"]
+        dates = data["dates"]
+        value += [dates]
+        value += [value[-3] - dates]
+    if data['outcomes'] is not None:
+        vertices += 2
+        label += ["Hookup", "F+", "Relationship", "Nothing"]
+        color += 4 * ["green"]
+    return label, color, value, vertices
 
 
 
