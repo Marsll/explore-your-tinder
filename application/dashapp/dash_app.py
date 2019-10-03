@@ -26,7 +26,7 @@ def add_dash(server):
     dash_app.index_string = html_layout
 
     # Create Dash Layout comprised of Data Tables
-    dash_app.layout = html.Div([dcc.Location(id='url', refresh=True),
+    dash_app.layout = html.Div([dcc.Location(id='url', refresh=False),
                                 html.Div(id='layout_injector')]
                                )
     init_callback(dash_app)
@@ -40,7 +40,17 @@ def init_callback(dash_app):
     @dash_app.callback(Output('layout_injector', 'children'),
                        [Input('url', 'pathname')])
     def load_data(pathname):
+        # Super weird behavior, first NoneType, then class str...
+        # print(type(pathname), pathname)
         from .process_input import get_data
-
-        data = get_data("application/static/uploads/data.json")
-        return get_layout(data)
+        if pathname is not None:
+            if pathname.startswith('/dashapp/'):
+                pathname = pathname.replace('/dashapp/', '')
+                try:
+                    data = get_data(
+                        "application/static/uploads/" + pathname + ".json")
+                    return get_layout(data)
+                except:
+                    return html.Div(
+                        "Sorry, but you tried to access a non-existent url",
+                         className="container")

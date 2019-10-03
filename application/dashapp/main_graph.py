@@ -1,3 +1,5 @@
+from contextlib import suppress
+
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
@@ -5,19 +7,11 @@ import plotly.graph_objects as go
 
 
 def create_sankey(node_dict, link_dict):
-    try:
-        sankey_data = go.Sankey(
-        node = node_dict,
-        link = link_dict,
-        textfont=dict(size=20)
-        )
-    except AttributeError:
-        print("Something went wrong")
-        sankey_data = go.Sankey(
-        node = node_dict,
-        link = link_dict,
-        textfont=dict(size=20)
-        )
+    sankey_data = go.Sankey(
+            node = node_dict,
+            link = link_dict,
+            textfont=dict(size=20)
+    )
     return sankey_data
 
 def get_dicts(data):
