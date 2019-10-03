@@ -12,3 +12,4 @@ class User(db.Model):
     create_date = db.Column(db.String(60))
     gender = db.Column(db.String(1))
     gender_filter = db.Column(db.String(1))
+    matchrate = db.Column(db.Integer)

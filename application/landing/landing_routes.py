@@ -43,7 +43,7 @@ def landing():
             filename = 'application/static/uploads/' + uuid + '.json'
             file.save(filename)
             custom_url = "/dashapp/" + uuid
-            create_date, gender, gender_filter = get_some_data(filename)
+            create_date, gender, gender_filter, matchrate = get_some_data(filename)
 
             check_duplicate = User.query.filter_by(create_date=create_date).first()    
             if check_duplicate is not None:
@@ -62,7 +62,8 @@ def landing():
                 new_user = User(url=uuid,
                                 create_date=create_date,
                                 gender=gender,
-                                gender_filter=gender_filter
+                                gender_filter=gender_filter,
+                                matchrate=matchrate
                     ) 
 
                 db.session.add(new_user)  # Adds new User record to database
@@ -97,4 +98,11 @@ def get_some_data(filename):
     if gender_filter == "M and F":
         gender_filter = "D"
 
-    return create_date, gender, gender_filter
+    from ..dashapp.process_input import count, get_matchrate
+    swipes_likes = data['Usage']['swipes_likes']
+    matches = data['Usage']['matches']
+    swipes_likes_total = count(swipes_likes)
+    matches_total = count(matches)
+    matchrate = get_matchrate(matches_total, swipes_likes_total)
+
+    return create_date, gender, gender_filter, matchrate

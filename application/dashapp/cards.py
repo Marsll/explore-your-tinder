@@ -52,7 +52,7 @@ def four_cards(data):
             # Card 3
             [generate_card(
                     "Ranking",
-                    "<31%",
+                    data['ranking'],
                     icon="fas fa-trophy")
             ],
         className="col-12 col-lg-6 col-xl"),
