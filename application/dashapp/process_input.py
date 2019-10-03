@@ -118,6 +118,9 @@ def get_data(str):
     data_dict["matchrate_cum"] = match_rate_cum
     data_dict["numbers"] = None
     data_dict["dates"] = None
-    data_dict["outcomes"] = None
+    data_dict["hookups"] = None
+    data_dict["f+s"] = None
+    data_dict["relationships"] = None
+    data_dict['nothing'] = None
 
     return data_dict
