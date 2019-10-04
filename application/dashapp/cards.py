@@ -1,6 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
-
+import math as m
 
 def generate_card(description, value, icon, id=None):
     card =  html.Div(
@@ -34,7 +34,7 @@ def four_cards(data):
             # Card 1
             [generate_card(
                     "Matchrate",
-                    f"{data['match_rate']:d}%",
+                    f"{m.ceil(data['match_rate']):d}%",
                     icon="fas fa-fire")
             ],
         className="col-12 col-lg-6 col-xl"),

@@ -32,28 +32,37 @@ def get_dicts(data):
     value = [data["swipes_likes_total"], data["swipes_passes_total"],
              data["matches_total"], data["no_match_total"], 
              data["messaging"], data["no_messaging"]]
-    label, color, value, vertices = add_categories(data, label, color, value, vertices=4)
-    x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
+    label, color, value, vertices, other = add_categories(data, label, color, value, vertices=4)
+    if other != 0:
+        x_vertices = np.tile(np.linspace(0, 1, vertices + 1), 2)
+    else:
+        x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
     x_vertices.sort()
-    y_pos = [0.000001, 1., 0.3, 0.45, .8, .3, .6, 0.1 , 0.5, 0.2]
     num_values = vertices * 2 - 1
-    num_edges = vertices * 2
-    source = [0, 0, 1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 9, 9]
-    target = np.arange(vertices * 2) + 1
+    num_edges = (vertices - 1) * 2
+    y_pos = [0.000001, 1., 0.3, 0.45, .8, .3, .6, 0.5 , 0.1, 0.3, 0.7][:num_values]
+    source = [0, 0, 1, 1, 3, 3, 5, 5, 7, 7, 9, 9][:num_edges]
+    target = np.arange(vertices * 2 + other) + 1
+    if other !=0:
+        y_pos += [0.01, 0.55, 0.15, .85][:other]
+        x_vertices = np.concatenate([x_vertices, np.array([x_vertices[-1]] * (other - 2))])
+        source += [source[-1] + 2] * other
+        app.logger.info('value', x_vertices, source, target)
+
     node_dict = dict(
       pad = 0,
       x = x_vertices[1:],
-      y = y_pos[:num_values],
+      y = y_pos,
 
       thickness = 20, 
       line = dict(color = "black", width = 0.1, ),
-      label = label[:num_values],
-      color = color[:num_values],
+      label = label,
+      color = color ,
 
       hovertemplate ="%{label}"#: %{value}"
     )
     link_dict = dict(
-      source = source[:num_edges], # indices correspond to labels, eg A1, A2, A2, B1, ...
+      source = source, # indices correspond to labels, eg A1, A2, A2, B1, ...
       target = target,
       value = value,
       hoverinfo="skip",
@@ -65,29 +74,47 @@ def get_dicts_zoom(data):
     label = ["Matches", "Messaging", "No Messaging"]
     color = ["blue","blue", "red"]
     value = [data["messaging"], data["no_messaging"]]
-    label, color, value, vertices = add_categories(data, label, color, value, vertices=2)
-    x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
+    label, color, value, vertices, other = add_categories(data, label, color, value, vertices=2)
+    if other != 0:
+        x_vertices = np.tile(np.linspace(0, 1, vertices + 1), 2)
+    else:
+        x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
     x_vertices.sort()
-    y_pos = [0.000001, 1., 0.3, 0.45, .8, .3, .6, 0.1 , 0.5, 0.2]
     num_values = vertices * 2 - 1
-    num_edges = vertices * 2
-    source = [0, 0, 1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 9, 9]
-    target = np.arange(vertices * 2) + 1
+    num_edges = (vertices - 1) * 2
+    y_pos = [0.000001, 1., 0.3, 0.45, .8, .3, .6][:num_values]
+    source = [0, 0, 1, 1, 3, 3, 5, 5][:num_edges]
+    target = np.arange(vertices * 2 + other) + 1
+    if other !=0:
+        y_pos += [0.01, 0.55, 0.15, .85][:other]
+        x_vertices = np.concatenate([x_vertices, np.array([x_vertices[-1]] * (other - 2))])
+        if source[-1] == 0:
+            source += [1] * other
+        else:
+            source += [source[-1] + 2] * other
+        app.logger.info('value', x_vertices, source, target)
+    # x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
+    # x_vertices.sort()
+    # y_pos = [0.000001, 1., 0.3, 0.45, .8, .3, .6, 0.1 , 0.5, 0.2]
+    # num_values = vertices * 2 - 1
+    # num_edges = vertices * 2
+    # source = [0, 0, 1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 9, 9]
+    # target = np.arange(vertices * 2) + 1
     #app.logger.info('value', value, target)
     node_dict = dict(
       pad = 0,
       x = x_vertices[1:],
-      y = y_pos[:num_values],
+      y = y_pos,
 
       thickness = 20, 
       line = dict(color = "black", width = 0.1, ),
-      label = label[:num_values],
-      color = color[:num_values],
+      label = label,
+      color = color,
 
       hovertemplate ="%{label}"#: %{value}"
     )
     link_dict = dict(
-      source = source[:num_edges], # indices correspond to labels, eg A1, A2, A2, B1, ...
+      source = source, # indices correspond to labels, eg A1, A2, A2, B1, ...
       target = target,
       value = value,
       hoverinfo="skip",
@@ -96,7 +123,7 @@ def get_dicts_zoom(data):
 
 
 def add_categories(data, label, color, value, vertices):
-
+    other = 0
     if data['numbers'] is not None and data['numbers'] != 0:
         vertices += 1
         label += ["Number", "No Number"]
@@ -115,27 +142,34 @@ def add_categories(data, label, color, value, vertices):
     fplus = data['f+s']
     relationship = data['relationships']
     nothing = data['nothing']
-    if hookups or fplus or relationship or nothing:
-        vertices += 1
-        if nothing is None:
-            value +=[data[-2] - hookups - relationship - fplus]
-        else:
-            value += [nothing]
-        label += ["Nothing"]
-        color += ['green']
+    difference = value[-2]
     if hookups:
         label += ["Hookups"]
         color += ['green']
         value += [hookups]
+        difference -= hookups
+        other += 1
     if fplus:
         label += ["F+s"]
         color += ['green']
         value += [fplus]
+        difference -= fplus
+        other += 1
     if relationship:
         label += ["Relationships"]
         color += ['green']
         value += [relationship]
-    return label, color, value, vertices
+        difference -= relationship
+        other += 1
+    if hookups or fplus or relationship or nothing:
+        if nothing is None:
+            value +=[difference]
+        else:
+            value += [nothing]
+        label += ["Nothing"]
+        color += ['green']
+        other += 1
+    return label, color, value, vertices, other
 
 
 
