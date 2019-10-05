@@ -86,6 +86,10 @@ def init_callback(dash_app):
             data = get_data("application/static/uploads/" + pathname + ".json")
             data["numbers"] = numbers
             data["dates"] = dates
+            data["hookups"] = hookups
+            data["f+s"] = fplus
+            data["relationships"] = relationships
+            data["nothing"] = nothing
             if zoom:
                 node_dict, link_dict = get_dicts_zoom(data)
             else:

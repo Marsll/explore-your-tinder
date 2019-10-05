@@ -56,7 +56,7 @@ def time_difference(date_str):
         return f'{years}y {months}m {days}d'
 
 def get_matchrate(matches_total, swipes_likes_total):
-    match_rate = math.ceil(matches_total / swipes_likes_total * 100)
+    match_rate = matches_total / swipes_likes_total * 100
     return match_rate
 
 def get_data(str):
