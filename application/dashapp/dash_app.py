@@ -79,7 +79,6 @@ def init_callback(dash_app):
         if n_clicks is None:# and zoom is False:
             raise PreventUpdate
         else: 
-            # TODO add other to data and test (already implemented)
             # This will easily break! Find a better way for handling urls
             if pathname.startswith('/dashapp/'):
                 pathname = pathname.replace('/dashapp/', '')
@@ -128,4 +127,5 @@ def get_ranking(db, model, column, user_url):
     # print("this is pos", pos)
     from math import ceil
     # print("ranking:", ceil(pos / len(mrs) * 100))
+    #TODO remove old json file if a newer one is uploaded by the same person
     return ceil(pos / len(mrs) * 100)
