@@ -1,6 +1,6 @@
 import dash_core_components as dcc
-import dash_html_components as html
 import dash_daq as daq
+import dash_html_components as html
 
 from .cards import card_container, four_cards
 from .main_graph import double_sankey, sankey_graph
@@ -41,7 +41,6 @@ comprehensive picture, you can provide the site with additional data!
             ], 
         className="container")
         ],
-        id = "main-dash-app",
         className="bg-light-grey"
 )
     return layout

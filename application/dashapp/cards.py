@@ -1,3 +1,5 @@
+import math as m
+
 import dash_core_components as dcc
 import dash_html_components as html
 
@@ -22,7 +24,7 @@ def generate_card(description, value, icon, id=None):
                     ],
                 className="card-body")
                 ], 
-            className="card"                
+            className="card border-secondary"                
             )
     return card
 
@@ -34,7 +36,7 @@ def four_cards(data):
             # Card 1
             [generate_card(
                     "Matchrate",
-                    f"{data['match_rate']:d}%",
+                    f"{m.ceil(data['match_rate']):d}%",
                     icon="fas fa-fire")
             ],
         className="col-12 col-lg-6 col-xl"),
@@ -52,7 +54,7 @@ def four_cards(data):
             # Card 3
             [generate_card(
                     "Ranking",
-                    "<31%",
+                    data['ranking'],
                     icon="fas fa-trophy")
             ],
         className="col-12 col-lg-6 col-xl"),
@@ -83,11 +85,11 @@ def card_container(headline=None, children=None):
 
             html.Div(children=children, className="card-body")
             ],
-        className="card mb-2"    
+        className="card mb-2 border-secondary"    
         )
     else:
         card_container = html.Div(
             [html.Div(children=children, className="card-body")],
-            className="card mb-2")
+            className="card mb-2 border-secondary")
 
     return card_container

@@ -55,6 +55,9 @@ def time_difference(date_str):
     else:
         return f'{years}y {months}m {days}d'
 
+def get_matchrate(matches_total, swipes_likes_total):
+    match_rate = matches_total / swipes_likes_total * 100
+    return match_rate
 
 def get_data(str):
     with open(str, encoding="utf8") as json_file:
@@ -89,7 +92,7 @@ def get_data(str):
 
     swipes_total = swipes_likes_total + swipes_passes_total
     no_match = swipes_likes_total - matches_total
-    match_rate = math.ceil(matches_total / swipes_likes_total * 100)
+    match_rate = get_matchrate(matches_total, swipes_likes_total)
     no_messaging = matches_total - messaging
 
     # calc usage time
