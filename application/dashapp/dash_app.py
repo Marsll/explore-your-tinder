@@ -16,15 +16,13 @@ from .process_input import get_data
 
 def add_dash(server):
     """Create a Dash app."""
-    external_stylesheets = ['/static/src/css/styles.css',
-                            "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
+    external_stylesheets = ["https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
                             'https://fonts.googleapis.com/css?family=Lato',
-                            'https://use.fontawesome.com/releases/v5.8.1/css/all.css']
-    external_scripts = ['/static/dist/js/includes/jquery.min.js',
-                        '/static/dist/js/main.js']
+                            'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+                            '/static/src/css/styles.css',]
+    
     dash_app = Dash(server=server,
                     external_stylesheets=external_stylesheets,
-                    external_scripts=external_scripts,
                     routes_pathname_prefix='/dashapp/')
 
     # Override the underlying HTML template
@@ -125,7 +123,5 @@ def get_ranking(db, model, column, user_url):
     # Now, higher values are better, thus this person is at position 4 out of 5
     # Thus, we have to subtract
     pos = len(mrs)- pos_inserted
-    # print("this is pos", pos)
     from math import ceil
-    # print("ranking:", ceil(pos / len(mrs) * 100))
     return ceil(pos / len(mrs) * 100)

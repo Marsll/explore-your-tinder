@@ -78,10 +78,8 @@ def landing():
 @landing_bp.route('/about', methods=['GET'])
 def about():
     """About page route."""
-    return render_template('index.html',
-                           title='Flask-Blueprint Tutorial | About',
-                           template='about-template main',
-                           body="About")
+    return render_template('about.html',
+                           title='Explore your Tinder | About')
 
 
 def allowed_file(filename):

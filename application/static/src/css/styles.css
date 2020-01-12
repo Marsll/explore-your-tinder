@@ -1,27 +1,8 @@
-#main-dash-app{
-
-}
-
-div.bg-pink {
+.bg-pink {
   background-color: #ff336d;
 }
 
 .bg-light-grey{
-  background-color: #f2f2f2;
-}
-
-div#h1-results{
-  background-color: #ff336d;
-  color: white;
-}
-
-.btn.my-btn {
-  position:absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  vertical-align: middle;
+  /* background-color: #f2f2f2; */
+  background-color: #f5eb7a11;
 }

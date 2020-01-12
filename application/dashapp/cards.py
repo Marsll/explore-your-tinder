@@ -1,6 +1,8 @@
+import math as m
+
 import dash_core_components as dcc
 import dash_html_components as html
-import math as m
+
 
 def generate_card(description, value, icon, id=None):
     card =  html.Div(
@@ -22,7 +24,7 @@ def generate_card(description, value, icon, id=None):
                     ],
                 className="card-body")
                 ], 
-            className="card"                
+            className="card border-secondary"                
             )
     return card
 
@@ -83,11 +85,11 @@ def card_container(headline=None, children=None):
 
             html.Div(children=children, className="card-body")
             ],
-        className="card mb-2"    
+        className="card mb-2 border-secondary"    
         )
     else:
         card_container = html.Div(
             [html.Div(children=children, className="card-body")],
-            className="card mb-2")
+            className="card mb-2 border-secondary")
 
     return card_container
