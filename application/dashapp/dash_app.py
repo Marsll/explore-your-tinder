@@ -20,7 +20,7 @@ def add_dash(server):
                             'https://fonts.googleapis.com/css?family=Lato',
                             'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
                             '/static/src/css/styles.css',]
-    
+
     dash_app = Dash(server=server,
                     external_stylesheets=external_stylesheets,
                     routes_pathname_prefix='/dashapp/')
@@ -39,7 +39,8 @@ def add_dash(server):
 def init_callback(dash_app):
     from application import db
     from application.models import User
-    
+    folder_name = '/home/exploreyourtinder/explore-your-tinder/application/static/uploads/'
+
     @dash_app.callback(Output('layout_injector', 'children'),
                        [Input('url', 'pathname')])
     def load_data(pathname):
@@ -49,7 +50,7 @@ def init_callback(dash_app):
             if pathname.startswith('/dashapp/'):
                 pathname = pathname.replace('/dashapp/', '')
             try:
-                path_to_file = "application/static/uploads/" + pathname + ".json"
+                path_to_file = folder_name + pathname + ".json"
                 data = get_data(path_to_file)
                 ranking = get_ranking(db, User, User.matchrate, pathname)
                 data['ranking'] = f"<{ranking}%"
@@ -62,7 +63,7 @@ def init_callback(dash_app):
 
     @dash_app.callback(
         Output(component_id='sankey-graph', component_property='figure'),
-        [Input(component_id='button', component_property='n_clicks'), 
+        [Input(component_id='button', component_property='n_clicks'),
         Input(component_id='toggle-zoom', component_property='value'),
         Input('url', 'pathname')],
         [State('numbers', 'value'),
@@ -76,12 +77,12 @@ def init_callback(dash_app):
     def update_output(n_clicks, zoom, pathname, numbers, dates, hookups, fplus, relationships, nothing):
         if n_clicks is None:# and zoom is False:
             raise PreventUpdate
-        else: 
+        else:
             # TODO add other to data and test (already implemented)
             # This will easily break! Find a better way for handling urls
             if pathname.startswith('/dashapp/'):
                 pathname = pathname.replace('/dashapp/', '')
-            data = get_data("application/static/uploads/" + pathname + ".json")
+            data = get_data(folder_name + pathname + ".json")
             data["numbers"] = numbers
             data["dates"] = dates
             data["hookups"] = hookups
@@ -99,16 +100,16 @@ def init_callback(dash_app):
         [Input(component_id='toggle-zoom', component_property='value')],
         [State(component_id='button', component_property='n_clicks')]
         )
-    # Set n_clicks to 1 to be able to use toggle before submit 
+    # Set n_clicks to 1 to be able to use toggle before submit
     def update_output(zoom, n_clicks):
         if zoom is False and n_clicks is None:
             raise PreventUpdate
-        else: 
+        else:
             return 1
 
 def get_ranking(db, model, column, user_url):
     matchrates = db.session.query().with_entities(column).all()
-    # The output of the query is a list of tuples like so 
+    # The output of the query is a list of tuples like so
     # [(2,), (5,), (8,)]
     # Remove the tuples and sort the list
     mrs = [mr for (mr,) in matchrates]

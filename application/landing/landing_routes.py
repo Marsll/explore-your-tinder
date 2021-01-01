@@ -39,18 +39,18 @@ def landing():
 
 
             # Todo catch exception if uuid (the url) is not unique in db
-
-            filename = 'application/static/uploads/' + uuid + '.json'
+            folder_name = '/home/exploreyourtinder/explore-your-tinder/application/static/uploads/'
+            filename = folder_name + uuid + '.json'
             file.save(filename)
             custom_url = "/dashapp/" + uuid
             create_date, gender, gender_filter, matchrate = get_some_data(filename)
 
-            check_duplicate = User.query.filter_by(create_date=create_date).first()    
+            check_duplicate = User.query.filter_by(create_date=create_date).first()
             if check_duplicate is not None:
                 old_url = check_duplicate.url
                 try:
-                    os.remove(os.path.join('application/static/uploads/', old_url + '.json'))
-                except: 
+                    os.remove(os.path.join(folder_name, old_url + '.json'))
+                except:
                     pass
                 check_duplicate.url = uuid
                 db.session.commit()
@@ -58,13 +58,13 @@ def landing():
                 app.logger.info("new_url_generated " + check_duplicate.url)
                 app.logger.info("new_url_queried "+ User.query.filter_by(create_date=create_date).first().url)
 
-            else: 
+            else:
                 new_user = User(url=uuid,
                                 create_date=create_date,
                                 gender=gender,
                                 gender_filter=gender_filter,
                                 matchrate=matchrate
-                    ) 
+                    )
 
                 db.session.add(new_user)  # Adds new User record to database
                 db.session.commit()  # Commits all changes

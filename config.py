@@ -20,6 +20,12 @@ class Config:
     COMPRESSOR_DEBUG = environ.get('COMPRESSOR_DEBUG')
 
   # Database
-    SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username="exploreyourtinde",
+    password="Q4CwjujiwGPB3Dx",
+    hostname="exploreyourtinder.mysql.pythonanywhere-services.com",
+    databasename=" exploreyourtinde$user_database",
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = environ.get(
         "SQLALCHEMY_TRACK_MODIFICATIONS")
+    SQLALCHEMY_POOL_RECYCLE = 299
