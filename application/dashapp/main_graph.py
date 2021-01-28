@@ -30,7 +30,7 @@ def get_dicts(data):
     label = ["Total swipes", "Right swipes", "Left swipes", "Matches", "No Match", "Messaging", "No Messaging"]
     color = ["blue","blue", "red", "blue", "red", "blue", "red"]
     value = [data["swipes_likes_total"], data["swipes_passes_total"],
-             data["matches_total"], data["no_match_total"], 
+             data["matches_total"], data["no_match_total"],
              data["messaging"], data["no_messaging"]]
     label, color, value, vertices, other = add_categories(data, label, color, value, vertices=4)
     if other != 0:
@@ -44,7 +44,7 @@ def get_dicts(data):
     # ensure that the graph looks nice for a right/total ratio > 50%
     if value[0] > value[1]:
         y_pos = [0.000001, 0.7, 0.1, 0.2, .8, .3, .6, 0.5, 0.1, 0.2, 0.7][:num_values]
-        if value[2] > value[3]: 
+        if value[2] > value[3]:
             y_pos = [0.000001, 0.7, 0.1, 0.2, .8, .3, .8, 0.5, 0.1, 0.2, 0.7][:num_values]
 
     source = [0, 0, 1, 1, 3, 3, 5, 5, 7, 7, 9, 9][:num_edges]
@@ -56,14 +56,14 @@ def get_dicts(data):
             y_pos += [0.01, 0.55, 0.15, .85][:other]
         x_vertices = np.concatenate([x_vertices, np.array([x_vertices[-1]] * (other - 2))])
         source += [source[-1] + 2] * other
-        app.logger.info('value', x_vertices, source, target)
+        # app.logger.info('value', x_vertices, source, target)
 
     node_dict = dict(
       pad = 0,
       x = x_vertices[1:],
       y = y_pos,
 
-      thickness = 20, 
+      thickness = 20,
       line = dict(color = "black", width = 0.1, ),
       label = label,
       color = color ,
@@ -107,7 +107,7 @@ def get_dicts_zoom(data):
             source += [1] * other
         else:
             source += [source[-1] + 2] * other
-        app.logger.info('value', x_vertices, source, target)
+        # app.logger.info('value', x_vertices, source, target)
 
     # x_vertices = np.tile(np.linspace(0, 1, vertices), 2)
     # x_vertices.sort()
@@ -116,13 +116,13 @@ def get_dicts_zoom(data):
     # num_edges = vertices * 2
     # source = [0, 0, 1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 9, 9]
     # target = np.arange(vertices * 2) + 1
-    #app.logger.info('value', value, target)
+    # app.logger.info('value', value, target)
     node_dict = dict(
       pad = 0,
       x = x_vertices[1:],
       y = y_pos,
 
-      thickness = 20, 
+      thickness = 20,
       line = dict(color = "black", width = 0.1, ),
       label = label,
       color = color,
@@ -210,7 +210,7 @@ def create_sankey_small(data):
       x = [0, 1/3, 1/3, 2/3, 2/3, 1, 1],
       y = [0.000001, 1., 0.3, 0.45, .8, .3, .6],
 
-      thickness = 20, 
+      thickness = 20,
       line = dict(color = "black", width = 0.1, ),
       label = ["Total swipes", "Right swipes", "Left swipes", "Matches", "No Match", "No Messaging", "Messaging"],
       color = ["blue","blue", "red", "blue", "red", "blue", "red"],
@@ -222,12 +222,12 @@ def create_sankey_small(data):
       source = [0, 0, 1, 1, 3, 3], # indices correspond to labels, eg A1, A2, A2, B1, ...
       target = [1, 2, 3, 4, 5, 6],
       value = [data["swipes_likes_total"], data["swipes_passes_total"],
-             data["matches_total"], data["no_match_total"], 
+             data["matches_total"], data["no_match_total"],
              data["no_messaging"], data["messaging"]],
       hoverinfo="skip",
       #color = ["black", "red", "red", "red", "red", "red", "red"]
     ),
-    textfont=dict(size=20),       
+    textfont=dict(size=20),
     domain=dict(x=[0.6, 1], y =[0.6, 1])
     )
 
